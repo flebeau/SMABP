@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 
 #include "bandit.hpp"
 #include "SMAB.hpp"
@@ -43,11 +44,28 @@ int main(int argc, char *argv[]) {
 		return EXIT_FAILURE;
 	}
 
-    /* First define the bandits */
+    /* First define the bandits according to the specification file */
 	SMAB bandits;
-	bandits.add(new UniformBandit(0.7, 0.6));
-	bandits.add(new DeterministicBandit(0.7));
-	bandits.add(new UniformBandit(0.71, 0.5));
+	std::ifstream bandit_spec;
+	bandit_spec.open(bandits_file);
+	std::string letter;
+	double mean, lower;
+	
+	while (bandit_spec >> letter) {
+		if (letter == "D") {
+			bandit_spec >> mean;
+			bandits.add(new DeterministicBandit(mean));
+		}
+		else if (letter == "U") {
+			bandit_spec >> mean >> lower;
+			bandits.add(new UniformBandit(mean, lower));
+		}
+		else {
+			std::cerr << "Error: bandits specification file is invalid.\n";
+			return EXIT_FAILURE;
+		}
+	}
+	
 	
 	/* Now we play with the different strategies */
 	SimulateNaiveGreedy(bandits, N, iteration);
