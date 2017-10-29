@@ -30,7 +30,10 @@ protected:
 
 class NaiveGreedy : public GreedyStrategy {
 public:
-	NaiveGreedy(unsigned n_b) : GreedyStrategy(n_b) {}
+	NaiveGreedy(unsigned n_b) : GreedyStrategy(n_b) {
+		for (unsigned i = 0; i<n_b; i++)
+			rewards[i] = 1.;
+	}
 	
 	unsigned choice();
 };

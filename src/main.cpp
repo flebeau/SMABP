@@ -102,7 +102,7 @@ void SimulateNaiveGreedy(SMAB &bandits, unsigned N, unsigned iteration) {
 	}
 	
 	/* Output result (taking mean of regrets) */
-	std::cout << "n \"Naive greedy\"\n";
+	std::cout << "n \"Greedy\"\n";
 	for (unsigned i = 0; i<N; i++) {
 		std::cout << i << " " << regrets[i]/iteration << "\n";
 	}
