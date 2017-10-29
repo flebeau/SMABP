@@ -1,10 +1,10 @@
 #include "bandit.hpp"
 
-double DeterministicBandit::play() const {
-	return this->getMean();
+double DeterministicBandit::play() {
+	return getMean();
 }
 
 
-double UniformBandit::play() const {
-	return this->distr(this->engine);
+double UniformBandit::play() {
+	return distr(engine);
 }

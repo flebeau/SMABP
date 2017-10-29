@@ -7,7 +7,7 @@
 
 class SMAB {
 public:
-	std::size_t size() const; // Returns number of bandits
+	unsigned size() const; // Returns number of bandits
 	double play(unsigned b) const; // Simulate the reward by taking bandit b
 	void add(Bandit *bandit);
 	

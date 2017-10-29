@@ -1,6 +1,6 @@
 #include "SMAB.hpp"
 
-std::size_t SMAB::size() const {
+unsigned SMAB::size() const {
 	return bandits.size();
 }
 

@@ -9,9 +9,9 @@ public:
 	
 	const double &getMean() const {return mean;}
 	
-	virtual double play() const = 0;
+	virtual double play() = 0;
 	
-private:
+protected:
 	double mean;
 };
 
@@ -19,14 +19,14 @@ class DeterministicBandit : public Bandit {
 public:
 	DeterministicBandit(double m) : Bandit(m) {}
 	
-	virtual double play() const;	
+	virtual double play();	
 };
 
 class UniformBandit : public Bandit {
 public:
 	UniformBandit(double m, double lower = 0.) : Bandit(m), engine(), distr(lower,2.*m - lower) {}
 	
-	virtual double play() const;
+	virtual double play();
 	
 private:
 	std::default_random_engine engine;
