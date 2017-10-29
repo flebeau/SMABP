@@ -43,8 +43,8 @@ public:
 	
 private:
 	double epsilon;
-	ContinuousUniform distr_epsilon;
-	DiscreteUniform distr_bandit;
+	distribution::continuous_uniform distr_epsilon;
+	distribution::discrete_uniform distr_bandit;
 };
 
 #endif

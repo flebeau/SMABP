@@ -30,7 +30,7 @@ public:
 	virtual double play();
 	
 private:
-	ContinuousUniform distr;
+	distribution::continuous_uniform distr;
 };
 
 #endif
