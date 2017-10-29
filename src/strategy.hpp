@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <random>
+#include "random.hpp"
 
 class Strategy {
 public:
@@ -36,16 +37,14 @@ public:
 
 class EpsilonGreedy : public GreedyStrategy {
 public:
-	EpsilonGreedy(unsigned n_b, double e) : GreedyStrategy(n_b), epsilon(e), engine_epsilon(), distr_epsilon(0.,1.), engine_bandit(), distr_bandit(0, n_b - 1) {}
+	EpsilonGreedy(unsigned n_b, double e) : GreedyStrategy(n_b), epsilon(e), distr_epsilon(0.,1.), distr_bandit(0, n_b - 1) {}
 	
 	unsigned choice();
 	
 private:
 	double epsilon;
-	std::default_random_engine engine_epsilon;
-	std::uniform_real_distribution<double> distr_epsilon;
-	std::default_random_engine engine_bandit;
-	std::uniform_int_distribution<unsigned> distr_bandit;
+	ContinuousUniform distr_epsilon;
+	DiscreteUniform distr_bandit;
 };
 
 #endif

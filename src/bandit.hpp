@@ -2,6 +2,7 @@
 #define BANDIT_HPP_
 
 #include <random>
+#include "random.hpp"
 
 class Bandit {
 public:
@@ -19,18 +20,17 @@ class DeterministicBandit : public Bandit {
 public:
 	DeterministicBandit(double m) : Bandit(m) {}
 	
-	virtual double play();	
+	virtual double play();
 };
 
 class UniformBandit : public Bandit {
 public:
-	UniformBandit(double m, double lower = 0.) : Bandit(m), engine(), distr(lower,2.*m - lower) {}
+	UniformBandit(double m, double lower = 0.) : Bandit(m), distr(lower,2.*m - lower) {}
 	
 	virtual double play();
 	
 private:
-	std::default_random_engine engine;
-	std::uniform_real_distribution<double> distr;
+	ContinuousUniform distr;
 };
 
 #endif

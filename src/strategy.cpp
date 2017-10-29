@@ -21,8 +21,8 @@ unsigned NaiveGreedy::choice() {
 }
 
 unsigned EpsilonGreedy::choice() {
-	if (distr_epsilon(engine_epsilon) < epsilon) { // We sample uniformly with probability epsilon
-		return distr_bandit(engine_bandit);
+	if (distr_epsilon() < epsilon) { // We sample uniformly with probability epsilon
+		return distr_bandit();
 	}
 	// Else we do as in the naive greedy algorithm
 	unsigned choice = 0;

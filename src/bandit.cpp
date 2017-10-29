@@ -6,5 +6,5 @@ double DeterministicBandit::play() {
 
 
 double UniformBandit::play() {
-	return distr(engine);
+	return distr();
 }
