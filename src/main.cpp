@@ -103,8 +103,9 @@ void SimulateNaiveGreedy(SMAB &bandits, unsigned N, unsigned iteration) {
 	
 	/* Output result (taking mean of regrets) */
 	std::cout << "n \"Greedy\"\n";
+	std::cout << "0 0\n";
 	for (unsigned i = 0; i<N; i++) {
-		std::cout << i << " " << regrets[i]/iteration << "\n";
+		std::cout << i+1 << " " << regrets[i]/iteration << "\n";
 	}
 	
 	std::cout << "\n\n";
@@ -122,8 +123,9 @@ void SimulateEpsilonGreedy(SMAB &bandits, double eps, unsigned N, unsigned itera
 	
 	/* Output result (taking mean of regrets) */
 	std::cout << "n \"{/Symbol e}=" << eps << "\"\n";
+	std::cout << "0 0\n";
 	for (unsigned i = 0; i<N; i++) {
-		std::cout << i << " " << regrets[i]/iteration << "\n";
+		std::cout << i+1 << " " << regrets[i]/iteration << "\n";
 	}
 	
 	std::cout << "\n\n";
