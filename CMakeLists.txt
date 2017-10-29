@@ -6,8 +6,12 @@ set(CMAKE_BUILD_TYPE Release)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -Wall")
 
-include_directories(src)
+#package
+find_package(Boost COMPONENTS program_options REQUIRED)
+
+include_directories(src ${Boost_INCLUDE_DIR})
+
 file(GLOB SOURCES src/*.cpp)
 
 add_executable(SMABP ${SOURCES})
-#target_link_libraries(raytracer m ${X11_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(SMABP ${Boost_LIBRARIES})
