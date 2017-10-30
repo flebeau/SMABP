@@ -2,8 +2,10 @@
 
 reset
 
+if (!exists("output_file")) output_file='plots.pdf'
+
 set terminal pdf
-set output 'plots.pdf'
+set output output_file
 
 set xlabel "Number of steps"
 set ylabel "Mean regret"

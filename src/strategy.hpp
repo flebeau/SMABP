@@ -18,7 +18,7 @@ protected:
 
 class GreedyStrategy : public Strategy {
 public:
-	GreedyStrategy(unsigned n_b) : Strategy(n_b), rewards(n_b,0.), times_played(n_b, 0) {}
+	GreedyStrategy(unsigned n_b) : Strategy(n_b), rewards(n_b,1.), times_played(n_b, 0), step(0) {}
 	
 	virtual unsigned choice() = 0;
 	void played(unsigned bandit, double reward);
@@ -26,14 +26,12 @@ public:
 protected:
 	std::vector<double> rewards; // Rewards by bandit obtained so far
 	std::vector<unsigned> times_played; // Number of times we played each bandit
+	unsigned step;
 };
 
 class NaiveGreedy : public GreedyStrategy {
 public:
-	NaiveGreedy(unsigned n_b) : GreedyStrategy(n_b) {
-		for (unsigned i = 0; i<n_b; i++)
-			rewards[i] = 1.;
-	}
+	NaiveGreedy(unsigned n_b) : GreedyStrategy(n_b) {}
 	
 	unsigned choice();
 };
@@ -46,6 +44,18 @@ public:
 	
 private:
 	double epsilon;
+	distribution::continuous_uniform distr_epsilon;
+	distribution::discrete_uniform distr_bandit;
+};
+
+class VanishingGreedy : public GreedyStrategy {
+public:
+	VanishingGreedy(unsigned n_b, double e) : GreedyStrategy(n_b), d(e), distr_epsilon(0.,1.), distr_bandit(0, n_b - 1) {}
+	
+	unsigned choice();
+	
+private:
+	double d;
 	distribution::continuous_uniform distr_epsilon;
 	distribution::discrete_uniform distr_bandit;
 };
