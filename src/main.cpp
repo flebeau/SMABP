@@ -116,12 +116,12 @@ void SimulateStrategyOnce(SMAB &bandits, Strategy &strat, std::vector<double> &r
 
 void SimulateNaiveGreedy(SMAB &bandits, unsigned N, unsigned iteration, Progress &progress) {
 	unsigned n_bandits = bandits.size();
-	NaiveGreedy naive_greedy(n_bandits);	
 	std::vector<double> regrets(N,0.);
 	
 	/* Simulate strategy multiple times */
     #pragma omp parallel for schedule(dynamic,1)
 	for (unsigned j = 0; j<iteration; j++) {
+		NaiveGreedy naive_greedy(n_bandits);
 		SimulateStrategyOnce(bandits, naive_greedy, regrets, N);
 		++progress;
 	}
@@ -138,12 +138,12 @@ void SimulateNaiveGreedy(SMAB &bandits, unsigned N, unsigned iteration, Progress
 
 void SimulateEpsilonGreedy(SMAB &bandits, double eps, unsigned N, unsigned iteration, Progress &progress) {
 	unsigned n_bandits = bandits.size();
-	EpsilonGreedy eps_greedy(n_bandits, eps);	
 	std::vector<double> regrets(N,0.);
 	
 	/* Simulate strategy multiple times */
 	#pragma omp parallel for schedule(dynamic,1)
 	for (unsigned j = 0; j<iteration; j++) {
+		EpsilonGreedy eps_greedy(n_bandits, eps);
 		SimulateStrategyOnce(bandits, eps_greedy, regrets, N);
 		++progress;
 	}
@@ -160,12 +160,12 @@ void SimulateEpsilonGreedy(SMAB &bandits, double eps, unsigned N, unsigned itera
 
 void SimulateVanishingGreedy(SMAB &bandits, double d, unsigned N, unsigned iteration, Progress &progress) {
 	unsigned n_bandits = bandits.size();
-	VanishingGreedy vanishing_greedy(n_bandits, d);	
 	std::vector<double> regrets(N,0.);
 	
 	/* Simulate strategy multiple times */
 	#pragma omp parallel for schedule(dynamic,1)
 	for (unsigned j = 0; j<iteration; j++) {
+		VanishingGreedy vanishing_greedy(n_bandits, d);	
 		SimulateStrategyOnce(bandits, vanishing_greedy, regrets, N);
 		++progress;
 	}

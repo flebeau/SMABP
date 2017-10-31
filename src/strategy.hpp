@@ -18,7 +18,7 @@ protected:
 
 class GreedyStrategy : public Strategy {
 public:
-	GreedyStrategy(unsigned n_b) : Strategy(n_b), rewards(n_b,1.), times_played(n_b, 0), step(0) {}
+	GreedyStrategy(unsigned n_b) : Strategy(n_b), rewards(n_b,0.), times_played(n_b, 0), step(0) {}
 	
 	virtual unsigned choice() = 0;
 	void played(unsigned bandit, double reward);
@@ -50,14 +50,24 @@ private:
 
 class VanishingGreedy : public GreedyStrategy {
 public:
-	VanishingGreedy(unsigned n_b, double e) : GreedyStrategy(n_b), d(e), distr_epsilon(0.,1.), distr_bandit(0, n_b - 1) {}
-	
+	VanishingGreedy(unsigned n_b, double e) : GreedyStrategy(n_b), d(e), distr_epsilon(0.,1.), distr_bandit(0, n_b - 1), values_computed(false), gamma(1.), max_value(0.), max_bandits(n_b, false) {}
+
+	void computeValues();
+	void played(unsigned bandit, double reward);
 	unsigned choice();
+	
 	
 private:
 	double d;
 	distribution::continuous_uniform distr_epsilon;
 	distribution::discrete_uniform distr_bandit;
+	bool values_computed;
+	double gamma;
+	double max_value; // Max value in vector rewards
+	unsigned n_max_bandits;
+	std::vector<bool> max_bandits; // Bandits with max value
 };
+
+
 
 #endif

@@ -13,6 +13,7 @@ Prerequisites
 * Boost: timer and program_options
 * C++ compiler with C++11 standard
 * Gnuplot >= 4.6
+* OpenMP (recommended)
 
 Compiling and launching examples
 --------------------------------
@@ -37,5 +38,5 @@ System specification file format
 --------------------------------
 Each line of the file corresponds to a bandit. For now there are only two types of bandits:
 
-1. Deterministic with mean m: `D m`
+1. Deterministic with value v: `D v`
 2. Uniform with mean m and minimum value l: `U m l`
