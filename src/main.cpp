@@ -96,6 +96,8 @@ int main(int argc, char *argv[]) {
 	if (vanishing)
 		SimulateVanishingGreedy(bandits, 1., N, iteration, progress);
 	
+	std::cerr << "\n\n";
+	
 	return EXIT_SUCCESS;
 }
 
