@@ -5,7 +5,8 @@ SMABP is a small simulation program implementing the Stochastic Multi-Armed Band
 
   * naive greedy;
   * &epsilon;-greedy;
-  * vanishing greedy.
+  * vanishing greedy;
+  * UCB-alpha.
 
 Prerequisites
 -------------
@@ -17,7 +18,7 @@ Prerequisites
 
 Compiling and launching examples
 --------------------------------
-You can use the given script in the root directory 
+You can use the given script in the root directory
 
         ./run.sh
 
@@ -30,7 +31,7 @@ Otherwise the program can be compiled directly using cmake:
 
 Program Usage
 -------------
-See the help command: 
+See the help command:
 
         build/SMABP --help
 

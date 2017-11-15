@@ -12,7 +12,7 @@ unsigned NaiveGreedy::choice() {
 	double max_mean = 0.;
 	if (times_played.at(0) > 0)
 		max_mean = rewards[0] / times_played[0];
-	
+
 	for (unsigned i = 1; i<rewards.size(); i++) {
 		if (times_played[i] > 0 && rewards[i] / times_played[i] > max_mean) {
 			max_mean = rewards[i] / times_played[i];
@@ -31,7 +31,7 @@ unsigned EpsilonGreedy::choice() {
 	double max_mean = 0.;
 	if (times_played.at(0) > 0)
 		max_mean = rewards[0] / times_played[0];
-	
+
 	for (unsigned i = 1; i<rewards.size(); i++) {
 		if (times_played[i] > 0 && rewards[i] / times_played[i] > max_mean) {
 			max_mean = rewards[i] / times_played[i];
@@ -70,9 +70,9 @@ void VanishingGreedy::played(unsigned bandit, double reward) {
 	double Q = gamma / n_bandits;
 	if (max_bandits[bandit])
 		Q += (1. - gamma) / n_max_bandits;
-	
+
 	rewards[bandit] += reward / Q;
-	
+
 	step++;
 	times_played.at(bandit)++;
 	values_computed = false;
@@ -81,10 +81,60 @@ void VanishingGreedy::played(unsigned bandit, double reward) {
 unsigned VanishingGreedy::choice() {
 	if (!values_computed)
 		computeValues();
-	
+
 	if (distr_epsilon() < gamma) // We sample uniformly with probability gamma
 			return distr_bandit();
-	
+
+	unsigned b = distr_bandit();
+	while (!max_bandits[b]) {
+		b = distr_bandit();
+	}
+	return b;
+}
+
+void UCB::computeValues() {
+	if (step < n_bandits) {
+		values_computed = true;
+		return;
+	}
+	max_value = 0; // First determine max value
+	for (unsigned i = 0; i<rewards.size(); i++) {
+		double tmp = rewards[i]/times_played[i] + 2*sqrt(alpha*log(step)/(2*times_played[i]));
+		max_bandits[i] = false;
+		if (tmp > max_value) {
+			max_value = tmp;
+		}
+	}
+	n_max_bandits = 0;
+	for (unsigned i = 0; i<rewards.size(); i++) {
+		double tmp = rewards[i]/times_played[i] + 2*sqrt(alpha*log(step)/(2*times_played[i]));
+		if (tmp == max_value) {
+			max_bandits[i] = true;
+			n_max_bandits++;
+		}
+	}
+	values_computed = true;
+}
+
+void UCB::played(unsigned bandit, double reward) {
+	if (!values_computed)
+		computeValues();
+
+	rewards[bandit] += reward;
+
+	step++;
+	times_played.at(bandit)++;
+	values_computed = false;
+}
+
+unsigned UCB::choice() {
+	if (!values_computed)
+		computeValues();
+
+	if (step < n_bandits) {
+		return step;
+	}
+
 	unsigned b = distr_bandit();
 	while (!max_bandits[b]) {
 		b = distr_bandit();
