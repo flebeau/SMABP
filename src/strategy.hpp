@@ -8,7 +8,7 @@
 class Strategy {
 public:
 	Strategy(unsigned n_b) : n_bandits(n_b) {}
-	
+    
 	virtual unsigned choice() = 0; // Choose a bandit according to strategy
 	virtual void played(unsigned bandit, double reward) = 0; // Take the info of the reward obtained as feedback
 	
